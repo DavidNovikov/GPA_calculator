@@ -1,0 +1,68 @@
+# create dictionary to store GPA equivalent of grade
+gradeToGPA = {
+    'A': 4.0,
+    'A-': 3.7,
+    'B+': 3.3,
+    'B': 3.0,
+    'B-': 2.7,
+    'C+': 2.3,
+    'C': 2.0,
+    'C-': 1.7,
+    'D+': 1.3,
+    'D': 1.0,
+    'D-': 0.7,
+    'F': 0.0
+}
+
+
+# grade returns the conversion from letter grade to value
+def gpavalue(letter):
+    # checks if user wants to quit
+    if letter == 'Q':
+        return 'Q'
+
+    # checks and rearranged +/- sign if nessecary
+    if letter[0] == '+' or letter[0] == '-':
+        letter = letter[1] + letter[0]
+
+    # gets point equivalent of grade,
+    # if it is not a valid grade use recursion until user quits,
+    # or enters a valid grade
+    value = gradeToGPA.get(letter)
+    if type(value) != float:
+        print('\nERROR: Invalid  input')
+        grade = (input('Please enter the grade in the class or Q to quit\n')).upper()
+        value = gpavalue(grade)
+
+    # user has input a valid grade, return the grade's point equivalent
+    return value
+
+
+# initialize variables
+totalGPA = 0
+totalcredit = 0
+
+# run while loop until the user quits
+print("\nWhen you've put in all the classes and grades press Q to quit\n")
+running = 1
+
+while running:
+    # ask and get point value
+    grade = (input('Please enter the grade in the class\n')).upper()
+    val = gpavalue(grade)
+    # check if user wants to quit
+    if val == 'Q':
+        running = 0
+    else:  # user doesn't want to quit, find the point contribution to their gpa
+        credit = float(input('Please enter the credit for the class\n'))
+        # use credit to find their gpa
+        totalGPA += val * credit
+        totalcredit += credit
+
+# find the calculate the final GPA
+gpa = totalGPA / totalcredit
+print('Your GPA is ' + str(gpa))
+
+# this holds the window open until the user closes the window if they just open the file
+while 1:
+    a = 1
